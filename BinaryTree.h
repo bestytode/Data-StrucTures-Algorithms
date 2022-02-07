@@ -16,7 +16,6 @@ struct TreeNode
 	TreeNode* right;
 	int val;
 
-	//重载 << 以输出节点值
 	friend ostream& operator << (ostream& out, TreeNode& node)	
 	{
 		cout << node.val;	
