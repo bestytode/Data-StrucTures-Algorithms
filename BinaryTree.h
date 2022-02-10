@@ -1,24 +1,30 @@
 //Simple Binary Search Tree CPP Implementation
 
 #pragma once
+#ifndef BINARY_SEARCH_TREE_
+#define BINARY_SEARCH_TREE_
+
 #include<iostream>
 #include<initializer_list>
 #include<queue>
-using namespace std;
+#include<cassert>
 
-// struct BST node
+// Struct BST node with int type
 struct TreeNode
 {
 	TreeNode() : left(nullptr), right(nullptr), val(0) {}
 	TreeNode(int  x) : left(nullptr), right(nullptr), val(x) {}
+	TreeNode(TreeNode* left, TreeNode* right, int x) :left(left), right(right), val(x) {}
+	~TreeNode() = default;
 
 	TreeNode* left;
 	TreeNode* right;
 	int val;
 
-	friend ostream& operator << (ostream& out, TreeNode& node)	
+	// Overloading << to ouput value of this TreeNode
+	friend std::ostream& operator << (std::ostream& out, TreeNode& node)
 	{
-		cout << node.val;	
+		out << node.val;
 		return out;
 	}
 };
@@ -27,23 +33,30 @@ struct TreeNode
 enum class TraverseFlag
 {
 	PRE_ORDER = 0,  
-	IN_ORDER,		
-	POST_ORDER,     
-	LEVEL_ORDER,    
+	IN_ORDER = 1,		
+	POST_ORDER = 2,     
+	LEVEL_ORDER = 3,    
 };
 
-// Class BST Implementation
+// CLASS BST Implementation with int type
 class BinaryTree final
 {
 public:
 	BinaryTree() : root(nullptr) {}
-	BinaryTree(initializer_list<int> list)
+	BinaryTree(std::initializer_list<int> list)
 	{
 		for (int val : list)
 			insert(val);
 	}
 
-	void insert(int val)
+	BinaryTree(const BinaryTree& tree)
+	{
+		//TODO
+	}
+
+	~BinaryTree() = default;
+
+    void insert(int val)
 	{
 		if (!root)
 		{
@@ -63,9 +76,10 @@ public:
 					current->left = newNode;
 					break;
 				}
-				else				
+				else
+				{
 					current = current->left;
-
+				}
 			}
 			if (newNode->val > current->val)
 			{
@@ -74,16 +88,17 @@ public:
 					current->right = newNode;
 					break;
 				}
-				else				
+				else
+				{
 					current = current->right;
-
+				}
 			}
 		}
 	}
 
-	void erase(int val)//TODO
+	void erase(int val)
 	{
-
+        //TODO
 	}
 
 	int minValue()	
@@ -110,7 +125,7 @@ public:
 		return cur->val;
 	}
 
-	friend ostream& operator << (ostream& out, BinaryTree& tree) 
+	friend std::ostream& operator << (std::ostream& out, BinaryTree& tree)
 	{
 		tree.inOrder(tree.root);
 		return out;
@@ -148,7 +163,7 @@ private:
 	{
 		if (root)
 		{
-			cout << *root << " ";
+			std::cout << *root << " ";
 			preOrder(root->left);
 			preOrder(root->right);
 		}
@@ -159,7 +174,7 @@ private:
 		if (root)
 		{
 			inOrder(root->left);
-			cout << *root << " ";
+			std::cout << *root << " ";
 			inOrder(root->right);
 		}
 	}
@@ -168,7 +183,7 @@ private:
 	{
 		if (root)
 		{
-			cout << *root << " ";
+			std::cout << *root << " ";
 			postOrder(root->left);
 			postOrder(root->right);
 		}
@@ -179,16 +194,17 @@ private:
 		if (!root)
 			return;
 
-		queue<TreeNode*>q;
+		std::queue<TreeNode*>q;
 		q.push(root);
 
 		while (!q.empty())
 		{
-			for (int i = 0; i < q.size(); ++i)
+			int length = q.size();
+			for (int i = 0; i < length; ++i)
 			{
 				TreeNode* node = q.front();
 				q.pop();
-				cout << *node << " ";
+				std::cout << *node << " ";
 
 				if (node->left)
 					q.push(node->left);
@@ -202,3 +218,5 @@ private:
 private:
 	TreeNode* root;
 };
+
+#endif BINARY_SEARCH_TREE_
