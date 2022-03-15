@@ -7,18 +7,19 @@
 #include<iostream>
 #include<initializer_list>
 #include<queue>
-#include<cassert>
+#include<memory>
 
-// Struct BST node with int type
+// Struct BST node 
 struct TreeNode
 {
 	TreeNode() : left(nullptr), right(nullptr), val(0) {}
 	TreeNode(int  x) : left(nullptr), right(nullptr), val(x) {}
 	TreeNode(TreeNode* left, TreeNode* right, int x) :left(left), right(right), val(x) {}
+
 	~TreeNode() = default;
 
-	TreeNode* left;
-	TreeNode* right;
+	std::shared_ptr<TreeNode> left = std::make_shared<TreeNode>();
+	std::shared_ptr<TreeNode> right = std::make_shared<TreeNode>();
 	int val;
 
 	// Overloading << to ouput value of this TreeNode
@@ -29,47 +30,49 @@ struct TreeNode
 	}
 };
 
-// To specify traversal rules
+// Enum Class to specify traversal rules
 enum class TraverseFlag
 {
-	PRE_ORDER = 0,  
-	IN_ORDER = 1,		
-	POST_ORDER = 2,     
-	LEVEL_ORDER = 3,    
+	PRE_ORDER = 0,
+	IN_ORDER = 1,
+	POST_ORDER = 2,
+	LEVEL_ORDER = 3,
 };
 
-// CLASS BST Implementation with int type
-class BinaryTree final
+// CLASS BST
+class BinarySearchTree final
 {
 public:
-	BinaryTree() : root(nullptr) {}
-	BinaryTree(std::initializer_list<int> list)
+	using BST = BinarySearchTree;
+
+	BinarySearchTree() : root(nullptr) {}
+	BinarySearchTree(std::initializer_list<int> list)
 	{
 		for (int val : list)
 			insert(val);
 	}
 
-	BinaryTree(const BinaryTree& tree)
+	BinarySearchTree(const BinarySearchTree& tree)
 	{
-		//TODO
+		root = tree.root;
 	}
 
-	~BinaryTree() = default;
+	~BinarySearchTree() = default;
 
-    void insert(int val)
+	void insert(int val)
 	{
 		if (!root)
 		{
-			root = new TreeNode(val);
+			root->val = val;
 			return;
 		}
 
-		TreeNode* current = root;
-		TreeNode* newNode = new TreeNode(val);
+		std::shared_ptr<TreeNode> current = root;		
+		std::shared_ptr<TreeNode> newNode = std::make_shared<TreeNode>(val);
 
 		while (true)
 		{
-			if (newNode->val <= current->val)	
+			if (newNode->val <= current->val)
 			{
 				if (current->left == nullptr)
 				{
@@ -98,19 +101,19 @@ public:
 
 	void erase(int val)
 	{
-        //TODO
+		// TODO
 	}
 
-	int minValue()	
+	int minValue()
 	{
 		if (!root)
 			return -1;
 
-		TreeNode* cur = root;
+		std::shared_ptr<TreeNode> cur = root;
 		while (cur && cur->left)
 			cur = cur->left;
 
-		return cur->val;		
+		return cur->val;
 	}
 
 	int maxValue()
@@ -118,15 +121,19 @@ public:
 		if (!root)
 			return -1;
 
-		TreeNode* cur = root;
+		std::shared_ptr<TreeNode> cur = root;
 		while (cur && cur->right)
 			cur = cur->right;
 
 		return cur->val;
 	}
 
-	friend std::ostream& operator << (std::ostream& out, BinaryTree& tree)
+	// Overloading operagtor << to output the whole BST
+	friend std::ostream& operator << (std::ostream& out, BinarySearchTree& tree)
 	{
+		if (tree.root == nullptr)
+			return out;
+
 		tree.inOrder(tree.root);
 		return out;
 	}
@@ -157,9 +164,8 @@ public:
 		}
 		}
 	}
-
 private:
-	void preOrder(TreeNode* root) const
+	void preOrder(std::shared_ptr<TreeNode> root) const
 	{
 		if (root)
 		{
@@ -169,7 +175,7 @@ private:
 		}
 	}
 
-	void inOrder(TreeNode* root) const
+	void inOrder(std::shared_ptr<TreeNode> root) const
 	{
 		if (root)
 		{
@@ -179,30 +185,29 @@ private:
 		}
 	}
 
-	void postOrder(TreeNode* root) const
+	void postOrder(std::shared_ptr<TreeNode> root) const
 	{
 		if (root)
 		{
-			std::cout << *root << " ";
 			postOrder(root->left);
 			postOrder(root->right);
+			std::cout << *root << " ";
 		}
 	}
 
-	void levelOrder(TreeNode* root) const
+	void levelOrder(std::shared_ptr<TreeNode> root) const
 	{
 		if (!root)
 			return;
 
-		std::queue<TreeNode*>q;
+		std::queue<std::shared_ptr<TreeNode>>q;
 		q.push(root);
-
 		while (!q.empty())
 		{
 			int length = q.size();
 			for (int i = 0; i < length; ++i)
 			{
-				TreeNode* node = q.front();
+				auto node = q.front();
 				q.pop();
 				std::cout << *node << " ";
 
@@ -214,9 +219,8 @@ private:
 			}
 		}
 	}
-
 private:
-	TreeNode* root;
+	std::shared_ptr<TreeNode> root = std::make_shared<TreeNode>();
 };
 
 #endif BINARY_SEARCH_TREE_
