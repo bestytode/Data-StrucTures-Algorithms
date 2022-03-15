@@ -20,8 +20,7 @@ struct ListNode
 
 	friend std::ostream& operator <<(std::ostream& out, const ListNode& node)
 	{	
-	    out << node.val;
-		return out;		
+	    return << node.val;		
 	}
 };
 
@@ -44,7 +43,7 @@ public:
 		//TODO
 	}
 
-	int& operator[](int index) 
+	int& operator[](int index) const
 	{
 		//TODO
 	}
@@ -74,11 +73,15 @@ public:
 		//TODO
 	}
 
-	int size()
+	int size() const
 	{
 		return m_size;
 	}
-
+        void empty() const
+	{
+		return m_size == 0;
+	}
+	
 	// Overloading << to output whole LinkedList
 	friend std::ostream& operator<<(std::ostream& out, const LinkedList& list)
 	{
