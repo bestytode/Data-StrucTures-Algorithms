@@ -1,4 +1,4 @@
-// Simple Singly List Implementation with cpp
+// template TODO LinkedList
 
 #pragma once
 #ifndef MY_LINKED_LIST_
@@ -20,7 +20,7 @@ struct ListNode
 
 	friend std::ostream& operator <<(std::ostream& out, const ListNode& node)
 	{	
-	    return << node.val;		
+	    return out << node.val;		
 	}
 };
 
@@ -32,9 +32,7 @@ public:
 	LinkedList(std::initializer_list<int>list)
 	{
 		for (int data : list)
-		{
 			push_back(data);
-		}
 	}
 
 	// Copy constuctor
@@ -57,7 +55,17 @@ public:
 	{
 		//TODO
 	}
-
+        
+	void pop_front()
+	{
+		//TODO
+	}
+	
+	void pop_back()
+	{
+		//TODO
+	}
+	
 	void insert(int val, int index)
 	{
 		//TODO
@@ -73,22 +81,28 @@ public:
 		//TODO
 	}
 
+	void sort()
+	{
+		//TODO
+	}
+	
 	int size() const
 	{
-		return m_size;
+		//TODO
 	}
+	
         void empty() const
 	{
-		return m_size == 0;
+		//TODO
 	}
 	
 	// Overloading << to output whole LinkedList
 	friend std::ostream& operator<<(std::ostream& out, const LinkedList& list)
 	{
-		if(!list.head)
-		    return out;
+		if(list.empty())
+		        return out;
 
-        ListNode* temp = list.head;
+                ListNode* temp = list.head;
 		while (temp)
 		{
 			out << temp->val << " ";
