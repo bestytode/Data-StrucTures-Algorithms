@@ -76,11 +76,11 @@ public:
 			return head->val;
 		}
 
-        // Start from the Head
+                // Start from the Head
 		ListNode* temp = head;
 
 		// Iterate through the linked list elements
-	    // until it finds the selected index
+	        // until it finds the selected index
 		for (int i = 0; i < index; ++i)
 		{
 			temp = temp->next;
@@ -103,7 +103,7 @@ public:
 			return;
 		}
 		// The current head will no longer become a head
-        // so the mext pointer of the new ListNode will point to the current head
+                // so the mext pointer of the new ListNode will point to the current head
 		else 
 		{
 		    temp->next = head;
@@ -112,7 +112,7 @@ public:
 	    }
 	}
 
-    void push_back(int val)
+        void push_back(int val)
 	{
 		if (empty())
 		{
@@ -145,7 +145,7 @@ public:
 		ListNode* temp = head;
 
 		// Point the head pointer
-	    // to the element next to the current head
+	        // to the element next to the current head
 		head = head->next;
 
 		delete temp;
@@ -160,7 +160,7 @@ public:
 		}
 
 		// If LinkedList has only one element
-	    // just simply call pop_front()
+	        // just simply call pop_front()
 		if (m_size == 1)
 		{
 			pop_front();
@@ -176,7 +176,7 @@ public:
 		}
 
 		// the prev now becomes the last node
-	    // so the next pointer of the prev point to nullptr
+	        // so the next pointer of the prev point to nullptr
 		prev->next = nullptr;
 		delete curr;
 		--m_size;
@@ -283,8 +283,8 @@ public:
 		int index = 0;
 
 		// Traverse until the selected value
-	    // is matched with the value
-	    // of the current position,
+	        // is matched with the value
+	        // of the current position,
 		ListNode* temp = head;
 		while (temp)
 		{
@@ -303,7 +303,7 @@ public:
 		if (empty()) 
 		{
 			return;
-	    }
+	        }
 		while (head) 
 		{
 			ListNode* temp = head;
