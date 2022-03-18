@@ -21,8 +21,7 @@ struct ListNode
 
 	friend std::ostream& operator <<(std::ostream& out, const ListNode& node) 
 	{
-	    out << node.val;
-		return out;		
+	    return out << node.val;		
 	}
 };
 
@@ -47,7 +46,8 @@ public:
 	{
 		if (list.empty()) 
 		{
-			clear();
+			LinkedList();
+			return;
 		}
 
 		ListNode* temp = head;
@@ -109,14 +109,14 @@ public:
 		    temp->next = head;
 		    head = temp;
 		    ++m_size;
-	    }
+	        }
 	}
 
         void push_back(int val)
 	{
 		if (empty())
 		{
-			push_back(val);
+			push_front(val);
 			return;
 		}
 
@@ -185,7 +185,7 @@ public:
 	void insert(size_t index, int val)
 	{
 		// Check if the index is out of bound
-		assert(index < m_size);
+		assert(index <= m_size);
 
 		// If inserting a new head
 		if (index == 0)
@@ -202,7 +202,7 @@ public:
 
 		ListNode* prev = head;
 
-        // Traverse the elements until the selected index is found
+                // Traverse the elements until the selected index is found
 		for (int i = 0; i < index - 1; ++i)
 		{
 			prev = prev->next;
@@ -277,7 +277,7 @@ public:
 	{
 		if (empty())
 		{
-			return;
+			return -1;
 		}
 
 		int index = 0;
@@ -335,7 +335,7 @@ public:
 			return out;
 		}
 
-        ListNode* temp = list.head;
+                ListNode* temp = list.head;
 		while (temp)
 		{
 			out << temp->val << " ";
