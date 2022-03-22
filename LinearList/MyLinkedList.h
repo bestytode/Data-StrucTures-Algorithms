@@ -27,7 +27,7 @@ public:
 
 	LinkedList(std::initializer_list<T>list); // TODO
 
-	LinkedList(const LinkedList& list); // TODO
+	LinkedList(const LinkedList<T>& list); // TODO
 
 	int& operator[](size_t index) const; // TODO
 
@@ -61,7 +61,7 @@ public:
 	}
 
 	// Overloading << to output whole LinkedList
-	friend std::ostream& operator<<(std::ostream& out, const LinkedList& list); // TODO
+	friend std::ostream& operator<<(std::ostream& out, const LinkedList<T>& list); // TODO
 private:
 	std::shared_ptr<ListNode<T>> head;
 	size_t m_size = 0;
