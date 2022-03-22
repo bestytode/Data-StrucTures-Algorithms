@@ -1,10 +1,7 @@
 #pragma once
-#ifndef LINKED_LIST_
-#define LINKED_LIST_
-
-#include<iostream>
-#include<initializer_list>
-#include<memory>
+#include <iostream>
+#include <initializer_list>
+#include <memory>
 
 // Template Struct ListNode
 template<typename T>
@@ -18,101 +15,56 @@ struct ListNode
 	ListNode(T  data, std::shared_ptr<ListNode<T>> next) : val(data), next(next) {};
 };
 
-// Class LinkedList
+// Template Class LinkedList
 template<typename T>
 class LinkedList final
 {
 public:
 	LinkedList() : head(nullptr), m_size(0) {}
-
 	LinkedList(std::initializer_list<T>list); // TODO
-
-	LinkedList(const LinkedList<T>& list); // TODO
-
-	int& operator[](size_t index) const; // TODO
+	LinkedList(const LinkedList<T>& list);    // TODO
 
 	void push_front(T val); // TODO
-
-	void push_back(T val); // TODO
-
-	void pop_front(); // TODO
-
-	void pop_back(); // TODO
+	void push_back(T val);  // TODO
+	void pop_front();       // TODO
+	void pop_back();        // TODO
 
 	void insert(size_t index, T val); // TODO
+	void erase(size_t index);         // TODO
 
-	void erase(size_t index); // TODO
+	void reverse();         // TODO
+	size_t search(T val)const; // TODO
 
-	void reverse(); // TODO
+	void print()const;  // TODO
+	size_t size()const; // TODO
+	bool empty()const;  // TODO
 
-	// return the first occurrence val int LinkedList or -1 if not founded
-	int search(T val) const; // TODO
-
-	void print()const {
-		std::cout << *this;
-	}
-
-	size_t size() const {
-		return m_size;
-	}
-
-	bool empty() const {
-		return m_size == 0;
-	}
-
-	// Overloading << to output whole LinkedList
+	T& operator[](size_t index)const; // TODO
 	friend std::ostream& operator<<(std::ostream& out, const LinkedList<T>& list); // TODO
 private:
-	std::shared_ptr<ListNode<T>> head;
-	size_t m_size = 0;
+	std::shared_ptr<ListNode<T>>head;
+	size_t m_size;
 public:
-	// Class Iterator
+	// Template Class Iterator
 	class Iterator
 	{
 	public:
 		Iterator() :current(nullptr) {}
 		Iterator(std::shared_ptr<ListNode<T>> node) :current(node) {}
 
-		// Dereference operation
-		int& operator*() {
-			return current->val;
-		}
+		T& operator*();         // TODO
+		Iterator& operator++();   // TODO
+		Iterator operator++(int); // TODO
 
-		Iterator& operator++() {
-			current = current->next;
-			return *this;
-		}
+		//Iterator& operator--();   // No this method existing in singly list
+		//Iterator operator--(int); // No this method existing in singly list
 
-		Iterator operator++(int) {
-			Iterator old = *this;
-			current = current->next;
-			return old;
-		}
-
-		//Iterator & operator -- ();	// No this method existing in singly list
-		//Iterator operator -- (int);   // No this method existing in singly list
-
-		bool operator==(const Iterator& itr) const {
-			return current == itr.current;
-		}
-
-		bool operator!=(const Iterator& itr) const {
-			return current != itr.current;
-		}
+		bool operator==(const Iterator& itr); // TODO
+		bool operator!=(const Iterator& itr); // TODO
 	private:
 		std::shared_ptr<ListNode<T>> current;
 	};
 public:
-	Iterator begin() {
-		return Iterator(head);
-	}
-
-	Iterator end() {
-		Iterator itr = Iterator(head);
-		for (int i = 0; i < m_size; i++)
-			itr++;
-		return itr;
-	}
+	Iterator begin(); // TODO
+	Iterator end();   // TODO
 };
-
-#endif LINKED_LIST_
