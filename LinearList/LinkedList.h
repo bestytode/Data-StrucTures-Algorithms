@@ -2,9 +2,9 @@
 #ifndef LinkedList_
 #define LinkedList_
 
-#include<initializer_list>
-#include<iostream>
-#include<stdexcept>
+#include <initializer_list>
+#include <iostream>
+#include <stdexcept>
 
 template<typename T>
 struct Node
@@ -16,8 +16,7 @@ struct Node
 	Node(T val) :val(val), next(nullptr) {};
 	Node(T val, Node<T>* node) : val(val), next(node) {};
 
-	friend std::ostream& operator <<(std::ostream& out, const Node<T>& node)
-	{
+	friend std::ostream& operator <<(std::ostream& out, const Node<T>& node){
 		return out << node.val;
 	}
 };
@@ -273,7 +272,7 @@ public:
 		Iterator(Node<T>* node) : current(node) {}
 
 		// Dereference operation
-		int& operator*()
+		T& operator*()
 		{
 			return current->val;
 		}
@@ -284,7 +283,7 @@ public:
 			return *this;
 		}
 
-		Iterator operator ++ (int)
+		Iterator operator ++ (T)
 		{
 			Iterator itr = *this;
 			current = current->next;
@@ -315,10 +314,8 @@ public:
 	Iterator end()
 	{
 		Iterator itr = Iterator(head);
-
-		for (size_t i = 0; i < m_size; i++) {
-			itr++;
-		}
+		for (size_t i = 0; i < m_size; i++) 
+			itr++;		
 		return itr;
 	}
 };
