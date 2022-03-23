@@ -1,7 +1,4 @@
 #pragma once
-#ifndef VECTOR_
-#define VECTOR_
-
 #include<iostream>
 
 template<class T>
