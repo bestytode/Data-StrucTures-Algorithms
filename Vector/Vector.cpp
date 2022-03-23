@@ -1,5 +1,4 @@
 #include"Vector.h"
-#include<iostream>
 
 // test class Vector3
 class Vector3
