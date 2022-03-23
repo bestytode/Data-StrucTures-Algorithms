@@ -1,36 +1,27 @@
-//Simple Binary Search Tree CPP Implementation
-
 #pragma once
-#ifndef BINARY_SEARCH_TREE_
-#define BINARY_SEARCH_TREE_
-
 #include<iostream>
 #include<initializer_list>
 #include<queue>
 #include<memory>
 
-// Struct BST node 
 struct TreeNode
 {
-	TreeNode() : left(nullptr), right(nullptr), val(0) {}
-	TreeNode(int  x) : left(nullptr), right(nullptr), val(x) {}
-	TreeNode(TreeNode* left, TreeNode* right, int x) :left(left), right(right), val(x) {}
-
-	~TreeNode() = default;
-
-	std::shared_ptr<TreeNode> left = std::make_shared<TreeNode>();
-	std::shared_ptr<TreeNode> right = std::make_shared<TreeNode>();
+	std::shared_ptr<TreeNode> left;
+	std::shared_ptr<TreeNode> right;
 	int val;
 
-	// Overloading << to ouput value of this TreeNode
+	TreeNode() : left(nullptr), right(nullptr), val(0) {}
+	TreeNode(int  x) : left(nullptr), right(nullptr), val(x) {}
+	TreeNode(std::shared_ptr<TreeNode> left, std::shared_ptr<TreeNode> right, int x)
+		:left(left), right(right), val(x) {}
+
+	// Overloading << to ouput the value of this TreeNode
 	friend std::ostream& operator << (std::ostream& out, TreeNode& node)
 	{
-		out << node.val;
-		return out;
+		return out << node.val;
 	}
 };
 
-// Enum Class to specify traversal rules
 enum class TraverseFlag
 {
 	PRE_ORDER = 0,
@@ -39,70 +30,51 @@ enum class TraverseFlag
 	LEVEL_ORDER = 3,
 };
 
-// CLASS BST
 class BinarySearchTree final
 {
 public:
-	using BST = BinarySearchTree;
-
-	BinarySearchTree() : root(nullptr) {}
+	BinarySearchTree() :root(nullptr) {}
 	BinarySearchTree(std::initializer_list<int> list)
 	{
 		for (int val : list)
 			insert(val);
 	}
 
-	BinarySearchTree(const BinarySearchTree& tree)
-	{
-		root = tree.root;
-	}
-
-	~BinarySearchTree() = default;
-
 	void insert(int val)
 	{
-		if (!root)
+		if (root == nullptr)
 		{
 			root->val = val;
 			return;
 		}
 
-		std::shared_ptr<TreeNode> current = root;		
+		std::shared_ptr<TreeNode> current = root;
 		std::shared_ptr<TreeNode> newNode = std::make_shared<TreeNode>(val);
-
-		while (true)
-		{
+		while (true) {
 			if (newNode->val <= current->val)
 			{
 				if (current->left == nullptr)
 				{
 					current->left = newNode;
-					break;
+					return;
 				}
 				else
-				{
 					current = current->left;
-				}
 			}
 			if (newNode->val > current->val)
 			{
 				if (current->right == nullptr)
 				{
 					current->right = newNode;
-					break;
+					return;
 				}
 				else
-				{
 					current = current->right;
-				}
 			}
 		}
 	}
 
-	void erase(int val)
-	{
-		// TODO
-	}
+	void erase(int val); //TODO
 
 	int minValue()
 	{
@@ -204,8 +176,8 @@ private:
 		q.push(root);
 		while (!q.empty())
 		{
-			int length = q.size();
-			for (int i = 0; i < length; ++i)
+			size_t length = q.size();
+			for (size_t i = 0; i < length; ++i)
 			{
 				auto node = q.front();
 				q.pop();
@@ -222,5 +194,3 @@ private:
 private:
 	std::shared_ptr<TreeNode> root = std::make_shared<TreeNode>();
 };
-
-#endif BINARY_SEARCH_TREE_
